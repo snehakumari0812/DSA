@@ -1,0 +1,90 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+void print(int arr[], int low, int high) {
+    for(int i = low; i < high; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+void Merge(int arr[], int low, int mid, int high) {
+    int leftSize = mid-low+1;
+    int rightSize = high - mid;
+    int leftArray[leftSize];
+    int rightArray[rightSize];
+    int i = 0, j = 0, k = low;
+    
+    //Copying data from original array to left and right arrays
+    for(i = 0; i < leftSize; i++) {
+        leftArray[i] = arr[i+low];
+        
+    }
+    
+    for(j = 0; j < rightSize; j++) {
+        rightArray[j] = arr[mid+1+j];
+    }
+    
+    i =0, j = 0;
+    //Comparing the elements of Left Array and Right Array
+    
+    while(i < leftSize && j < rightSize) {
+       
+        if(leftArray[i] < rightArray[j]) {
+            arr[k] =leftArray[i];
+            i++;
+            k++;
+        }
+        else {
+            arr[k] =rightArray[j];
+            j++;
+            k++;
+        }
+    }
+    while(i < leftSize ) {
+        arr[k] =leftArray[i];
+        i++;
+        k++;
+    }
+    while(j < rightSize ) {
+        
+        arr[k] =rightArray[j];
+        j++;
+        k++;
+    }
+    
+}
+void Merge_sort(int arr[], int low, int high) {
+    
+    if(low < high) {
+        int mid = (low + high)/2;
+        Merge_sort(arr, low, mid);
+        Merge_sort(arr, mid+1, high);
+        Merge(arr, low, mid, high);
+    }
+    
+    
+}
+int main() {
+    int size ;
+    cout << "Enter Size " << endl;
+    cin >> size;
+    int arr[size];
+    for(int i = 0; i < size; i++) 
+        cin >> arr[i] ;
+    
+    cout << "original array: ";
+   print(arr, 0, size);
+    
+    cout << endl;
+    int low = 0, high = size-1;
+    Merge_sort(arr, low, high);
+    
+    cout << "Sorted array: ";
+    print(arr, 0, size);
+       
+        
+
+    return 0;
+}
